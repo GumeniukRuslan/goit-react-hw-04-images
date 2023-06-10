@@ -20,33 +20,33 @@ export const App = () => {
       return
     }
     (async () => {
-      try {
-        setStatus('pending');
-        const images = await apiFetch(searchPromt, page);
-        setImagesArr(images.data.hits);
-        setTotalImages(images.data.totalHits);
-        setStatus('resolved');
-      } catch (e) {
-        setStatus('rejected');
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        try {
+          setStatus('pending');
+          const images = await apiFetch(searchPromt, page);
+          setImagesArr(images.data.hits);
+          setTotalImages(images.data.totalHits);
+          setStatus('resolved');
+        } catch (e) {
+          setStatus('rejected');
+        }
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchPromt]);
-  
+    
   useEffect(() => {
-  if (page === 1) {
-    return;
-  }
-  (async () => {
-    try {
-      const images = await apiFetch(searchPromt, page);
-      setImagesArr(prevArr => [...prevArr, ...images.data.hits]);
-    } catch (e) {
-      setStatus('rejected');
+    if (page === 1) {
+      return;
     }
-  })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [page]);
+    (async () => {
+        try {
+          const images = await apiFetch(searchPromt, page);
+          setImagesArr(prevArr => [...prevArr, ...images.data.hits]);
+        } catch (e) {
+          setStatus('rejected');
+        }
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   const submitHandler = async (evt) => {
     evt.preventDefault()
