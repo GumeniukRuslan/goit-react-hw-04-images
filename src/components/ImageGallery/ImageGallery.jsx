@@ -3,6 +3,7 @@ import { Modal } from "components/Modal/Modal"
 import { useState } from "react"
 import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css'
+import { AnimatePresence } from "framer-motion";
 
 export const ImageGallery = ({data}) => {
 
@@ -34,8 +35,10 @@ export const ImageGallery = ({data}) => {
         <ul className={css.imageList} >
           {data.map((image) => <ImageGalleryItem modalOpen={openModal} key={image.id} image={image} />)}
         </ul>
-          
-        {showModal && <Modal closeModal={closeModalonOverlay} hugeImg={hugeURL} />}
+        <AnimatePresence initial={false} onExitComplete={() => null}>
+          {showModal && <Modal closeModal={closeModalonOverlay} hugeImg={hugeURL} />}
+        </AnimatePresence>
+        
       </>
     )
 }

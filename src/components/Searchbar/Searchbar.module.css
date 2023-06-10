@@ -38,6 +38,12 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
+  transition: background-color 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #378439;
 }
 
 .arow{
