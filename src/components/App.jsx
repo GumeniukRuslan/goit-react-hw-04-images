@@ -14,40 +14,38 @@ export const App = () => {
   const [totalImages, setTotalImages] = useState(0);
   const [status, setStatus] = useState('idle');
 
+  
   useEffect(() => {
-  const fetchData = async () => {
     if (!searchPromt) {
       return
     }
-    try {
-      setStatus('pending');
-      const images = await apiFetch(searchPromt, page);
-      setImagesArr(images.data.hits);
-      setTotalImages(images.data.totalHits);
-      setStatus('resolved');
-    } catch (e) {
-      setStatus('rejected');
-    }
-  };
-
-  fetchData();
+    (async () => {
+      try {
+        setStatus('pending');
+        const images = await apiFetch(searchPromt, page);
+        setImagesArr(images.data.hits);
+        setTotalImages(images.data.totalHits);
+        setStatus('resolved');
+      } catch (e) {
+        setStatus('rejected');
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchPromt]);
   
   useEffect(() => {
-  const fetchData = async () => {
-    if (!searchPromt) {
-      const notify = () => toast.error('Please, fill the search field.');
-      return notify()
-    }
+  if (page === 1) {
+    return;
+  }
+  (async () => {
     try {
       const images = await apiFetch(searchPromt, page);
       setImagesArr(prevArr => [...prevArr, ...images.data.hits]);
     } catch (e) {
       setStatus('rejected');
     }
-  };
-
-  fetchData();
+  })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [page]);
 
   const submitHandler = async (evt) => {
