@@ -62,10 +62,12 @@ export const App = () => {
     <>
       <Searchbar onSubmit={submitHandler} />
       <div className="container">
-        {status === 'idle' ? <Message text='Fulfill your imagination'/>
-          : status === 'pending' ? <Loader />
-          : status === 'resolved' ? imagesArr.length === 0 ? <Message text='Nobody here but us chickens!'/> : <><ImageGallery data={imagesArr} />{totalImages > imagesArr.length ? <Button loadMore={()=> setPage(prevPage => prevPage + 1)} />: <Message text='Hope it`s fulfilled'/>}</>
-          : <Message text='Something went wrong' />}
+        {status === 'idle' ? <Message text='Fulfill your imagination' /> : <></>}
+        {status === 'pending' ? <Loader />: <></>}
+        {status === 'resolved' ? !imagesArr.length  ? <Message text='Nobody here but us chickens!' />
+          : <><ImageGallery data={imagesArr} />{totalImages > imagesArr.length ? <Button loadMore={() => setPage(prevPage => prevPage + 1)} />
+            : <Message text='Hope it`s fulfilled' />}</> : <></>}
+        {status === 'rejected' && <Message text='Something went wrong' />}
         <Toaster position="top-right" toastOptions={{duration: 1500}} />
       </div>
     </>);
